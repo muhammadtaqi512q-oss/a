@@ -3,47 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexura - Tech Startup</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="dark-mode.css">
+    <title>MUHAMMAD TAQI KING AI - Neural Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b0f19; color: #f3f4f6; }
+        .chat-container::-webkit-scrollbar { width: 6px; }
+        .chat-container::-webkit-scrollbar-thumb { background-color: #1f2937; border-radius: 4px; }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="logo">Nexura</div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+<body class="h-screen flex flex-col font-sans">
+
+    <!-- Top Navigation Bar -->
+    <header class="border-b border-gray-800 bg-[#0d1527] px-6 py-4 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
+                <i class="fa-solid fa-crown text-xl text-yellow-400"></i>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold tracking-wide uppercase bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                    MUHAMMAD TAQI KING <span class="text-blue-500 font-extrabold text-sm px-1.5 py-0.5 rounded bg-blue-950/50 border border-blue-800">AI</span>
+                </h1>
+                <p class="text-xs text-gray-500">Autonomous Pipeline Engine</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-6 text-sm font-medium">
+            <a href="#" class="text-blue-400 border-b-2 border-blue-500 pb-1 px-1">Chat</a>
+            <span class="flex items-center space-x-1.5 text-xs bg-emerald-950/60 border border-emerald-800 text-emerald-400 px-2.5 py-1 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Actions Core Active</span>
+            </span>
+        </div>
     </header>
-    <main>
-        <section id="home">
-            <h1>Welcome to Nexura</h1>
-            <p>Explore the future of technology.</p>
-            <button>Learn More</button>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 flex overflow-hidden">
+        
+        <!-- Chat Area -->
+        <section class="flex-1 flex flex-col justify-between bg-[#0b0f19] relative">
+            <div id="chat-window" class="chat-container flex-1 overflow-y-auto p-6 space-y-6">
+                <div id="welcome-message" class="max-w-2xl mx-auto mt-12 text-center space-y-4">
+                    <h2 class="text-2xl font-semibold text-gray-200">Welcome to Muhammad Taqi King AI! Ask me anything.</h2>
+                    <p class="text-sm text-gray-400">Type your prompt below. Your public request will trigger the offline GitHub actions architecture to compile code assets.</p>
+                </div>
+            </div>
+
+            <!-- Input Bar -->
+            <div class="p-4 border-t border-gray-800/80 bg-[#0d1527]/50 backdrop-blur-md">
+                <div class="max-w-3xl mx-auto flex items-end space-x-3 bg-[#131c31] border border-gray-800 rounded-2xl p-3 focus-within:border-blue-500/50 transition">
+                    <textarea id="user-input" rows="2" class="flex-1 bg-transparent border-0 outline-none resize-none text-sm text-gray-200 placeholder-gray-500 focus:ring-0 px-2" placeholder="Describe the page you want to generate... (e.g., Create a cyber landing page)"></textarea>
+                    <div class="flex items-center space-x-2">
+                        <button id="send-btn" onclick="triggerWorkflow()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition flex items-center space-x-2 shadow-lg shadow-blue-900/20">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Generate Code & Pages</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>Nexura is a cutting-edge tech startup dedicated to innovation.</p>
-        </section>
-        <section id="services">
-            <h2>Our Services</h2>
-            <ul>
-                <li>Cloud Computing</li>
-                <li>AI and Machine Learning</li>
-                <li>IoT Solutions</li>
-            </ul>
-        </section>
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>Reach out to us for more information.</p>
-        </section>
+
+        <!-- Sidebar -->
+        <aside class="w-80 border-l border-gray-800 bg-[#0d1527] p-5 hidden md:flex flex-col space-y-6">
+            <div>
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">System Assets</h3>
+                <div class="space-y-2.5">
+                    <div class="flex items-center space-x-3 p-3 rounded-xl bg-[#131c31] border border-gray-800">
+                        <i class="fa-regular fa-file-code text-blue-400 text-lg"></i>
+                        <div>
+                            <h4 class="text-xs font-medium text-gray-300">index.html</h4>
+                            <p class="text-[10px] text-gray-500">Main Chat Interface</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-gray-800" />
+            <div class="space-y-2">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Public Access Tip:</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">To trigger generation directly from this web UI, users can submit an issue with the title prefix <code class="text-blue-400 font-mono">[AI]</code> inside your GitHub repository tracker.</p>
+            </div>
+        </aside>
     </main>
-    <footer>
-        <p>&copy; 2023 Nexura</p>
-    </footer>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+        const welcomeMessage = document.getElementById('welcome-message');
+
+        function appendMessage(role, text) {
+            welcomeMessage.style.display = 'none';
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex space-x-4 max-w-3xl mx-auto p-4 rounded-2xl ${role === 'user' ? 'bg-[#131c31]/60 justify-end ml-auto' : 'bg-gray-900/40 border border-gray-800/40'}`;
+            
+            const avatar = role === 'user' 
+                ? `<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white order-2 ml-3"><i class="fa-solid fa-user"></i></div>`
+                : `<div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center text-xs font-bold text-white mr-3 border border-amber-400"><i class="fa-solid fa-crown text-xs"></i></div>`;
+
+            msgDiv.innerHTML = `
+                ${avatar}
+                <div class="flex-1 text-sm leading-relaxed ${role === 'user' ? 'text-right text-gray-200' : 'text-gray-300'}">
+                    <p class="font-semibold text-xs mb-1 text-gray-400">${role === 'user' ? 'You' : 'MUHAMMAD TAQI KING AI'}</p>
+                    <div class="whitespace-pre-line">${text}</div>
+                </div>
+            `;
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function triggerWorkflow() {
+            const prompt = userInput.value.trim();
+            if(!prompt) return;
+
+            appendMessage('user', prompt);
+            userInput.value = '';
+
+            // Public UI Instruction
+            appendMessage('ai', `🔄 **Request Registered!**\n\nBaqi users ke liye workflow pipeline automate karne ke liye, aap is repository par ek naya **GitHub Issue** banayein jiska Title **[AI]** se shuru ho aur body mein aapka prompt ho.\n\nGitHub Actions background mein bina kisi API key ke offline model run karke web pages compile kar dega!`);
+        }
+    </script>
 </body>
 </html>
