@@ -3,121 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUHAMMAD TAQI KING AI - Neural Workspace</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>OLLAMA CORE // Local Workflow Terminal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0b0f19; color: #f3f4f6; }
-        .chat-container::-webkit-scrollbar { width: 6px; }
-        .chat-container::-webkit-scrollbar-thumb { background-color: #1f2937; border-radius: 4px; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #02040a;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
     </style>
 </head>
-<body class="h-screen flex flex-col font-sans">
+<body class="text-slate-300 min-h-screen flex flex-col justify-between p-6">
 
-    <!-- Top Navigation Bar -->
-    <header class="border-b border-gray-800 bg-[#0d1527] px-6 py-4 flex justify-between items-center shadow-lg">
-        <div class="flex items-center space-x-3">
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
-                <i class="fa-solid fa-crown text-xl text-yellow-400"></i>
-            </div>
-            <div>
-                <h1 class="text-lg font-bold tracking-wide uppercase bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                    MUHAMMAD TAQI KING <span class="text-blue-500 font-extrabold text-sm px-1.5 py-0.5 rounded bg-blue-950/50 border border-blue-800">AI</span>
-                </h1>
-                <p class="text-xs text-gray-500">Autonomous Pipeline Engine</p>
-            </div>
+    <header class="w-full max-w-4xl mx-auto flex justify-between items-center glass-panel rounded-2xl px-6 py-4 border border-slate-900 shadow-xl">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+            <span class="text-xs font-mono tracking-widest text-emerald-400 uppercase">OLLAMA WORKFLOW NODE</span>
         </div>
-        <div class="flex items-center space-x-6 text-sm font-medium">
-            <a href="#" class="text-blue-400 border-b-2 border-blue-500 pb-1 px-1">Chat</a>
-            <span class="flex items-center space-x-1.5 text-xs bg-emerald-950/60 border border-emerald-800 text-emerald-400 px-2.5 py-1 rounded-full">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Actions Core Active</span>
-            </span>
-        </div>
+        <input type="text" id="tunnelUrl" placeholder="Paste Localtunnel URL here..." class="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1 text-xs text-emerald-400 outline-none w-64 font-mono">
     </header>
 
-    <!-- Main Workspace -->
-    <main class="flex-1 flex overflow-hidden">
-        
-        <!-- Chat Area -->
-        <section class="flex-1 flex flex-col justify-between bg-[#0b0f19] relative">
-            <div id="chat-window" class="chat-container flex-1 overflow-y-auto p-6 space-y-6">
-                <div id="welcome-message" class="max-w-2xl mx-auto mt-12 text-center space-y-4">
-                    <h2 class="text-2xl font-semibold text-gray-200">Welcome to Muhammad Taqi King AI! Ask me anything.</h2>
-                    <p class="text-sm text-gray-400">Type your prompt below. Your public request will trigger the offline GitHub actions architecture to compile code assets.</p>
-                </div>
+    <main class="flex-1 w-full max-w-2xl mx-auto my-6 flex flex-col justify-between">
+        <div id="chat-output" class="w-full flex-1 min-h-[50vh] max-h-[60vh] overflow-y-auto space-y-4 px-2 py-4 flex flex-col">
+            <div class="bg-slate-950/60 rounded-xl p-4 border border-slate-900 font-mono text-xs text-slate-500 leading-relaxed">
+                > Local server tunnel routing engine ready.<br>
+                > Owner signature verified: <span class="text-emerald-400">Muhammad Taqi King</span><br>
+                > Awaiting postMessage data stream from other bots...
             </div>
-
-            <!-- Input Bar -->
-            <div class="p-4 border-t border-gray-800/80 bg-[#0d1527]/50 backdrop-blur-md">
-                <div class="max-w-3xl mx-auto flex items-end space-x-3 bg-[#131c31] border border-gray-800 rounded-2xl p-3 focus-within:border-blue-500/50 transition">
-                    <textarea id="user-input" rows="2" class="flex-1 bg-transparent border-0 outline-none resize-none text-sm text-gray-200 placeholder-gray-500 focus:ring-0 px-2" placeholder="Describe the page you want to generate... (e.g., Create a cyber landing page)"></textarea>
-                    <div class="flex items-center space-x-2">
-                        <button id="send-btn" onclick="triggerWorkflow()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition flex items-center space-x-2 shadow-lg shadow-blue-900/20">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            <span>Generate Code & Pages</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sidebar -->
-        <aside class="w-80 border-l border-gray-800 bg-[#0d1527] p-5 hidden md:flex flex-col space-y-6">
-            <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">System Assets</h3>
-                <div class="space-y-2.5">
-                    <div class="flex items-center space-x-3 p-3 rounded-xl bg-[#131c31] border border-gray-800">
-                        <i class="fa-regular fa-file-code text-blue-400 text-lg"></i>
-                        <div>
-                            <h4 class="text-xs font-medium text-gray-300">index.html</h4>
-                            <p class="text-[10px] text-gray-500">Main Chat Interface</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr class="border-gray-800" />
-            <div class="space-y-2">
-                <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Public Access Tip:</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">To trigger generation directly from this web UI, users can submit an issue with the title prefix <code class="text-blue-400 font-mono">[AI]</code> inside your GitHub repository tracker.</p>
-            </div>
-        </aside>
+        </div>
     </main>
 
+    <footer class="w-full max-w-2xl mx-auto">
+        <div class="glass-panel rounded-2xl p-2 flex items-center gap-2 border border-slate-800">
+            <input type="text" id="userInput" placeholder="Query local workflow node directly..." class="flex-1 bg-transparent border-0 outline-none px-4 py-3 text-sm text-slate-100" onkeypress="if(event.key === 'Enter') askOllamaCore()">
+            <button id="sendBtn" onclick="askOllamaCore()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold px-6 py-3.5 rounded-xl transition cursor-pointer">GENERATE</button>
+        </div>
+    </footer>
+
     <script>
-        const chatWindow = document.getElementById('chat-window');
-        const userInput = document.getElementById('user-input');
-        const welcomeMessage = document.getElementById('welcome-message');
+        // Direct execution via dashboard UI
+        async function askOllamaCore() {
+            const input = document.getElementById('userInput');
+            const output = document.getElementById('chat-output');
+            const btn = document.getElementById('sendBtn');
+            let tunnelBase = document.getElementById('tunnelUrl').value.trim();
+            const query = input.value.trim();
 
-        function appendMessage(role, text) {
-            welcomeMessage.style.display = 'none';
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `flex space-x-4 max-w-3xl mx-auto p-4 rounded-2xl ${role === 'user' ? 'bg-[#131c31]/60 justify-end ml-auto' : 'bg-gray-900/40 border border-gray-800/40'}`;
-            
-            const avatar = role === 'user' 
-                ? `<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white order-2 ml-3"><i class="fa-solid fa-user"></i></div>`
-                : `<div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center text-xs font-bold text-white mr-3 border border-amber-400"><i class="fa-solid fa-crown text-xs"></i></div>`;
+            if (!query || !tunnelBase) return;
+            if(!tunnelBase.endsWith('/')) tunnelBase += '/';
 
-            msgDiv.innerHTML = `
-                ${avatar}
-                <div class="flex-1 text-sm leading-relaxed ${role === 'user' ? 'text-right text-gray-200' : 'text-gray-300'}">
-                    <p class="font-semibold text-xs mb-1 text-gray-400">${role === 'user' ? 'You' : 'MUHAMMAD TAQI KING AI'}</p>
-                    <div class="whitespace-pre-line">${text}</div>
-                </div>
-            `;
-            chatWindow.appendChild(msgDiv);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
+            appendBubble('user', query);
+            input.value = '';
+            btn.disabled = true; btn.innerText = "PROCESSING...";
+
+            const loaderId = appendBubble('system', "Streaming request to GitHub local container runner...");
+
+            try {
+                // Ollama Native local API generation link endpoint
+                const response = await fetch(`${tunnelBase}api/generate`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "taqi-core", // Triggering your custom local built model
+                        prompt: query,
+                        stream: false
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById(loaderId).remove();
+                appendBubble('ai', data.response);
+
+            } catch (error) {
+                document.getElementById(loaderId).remove();
+                appendBubble('ai', "CRITICAL: Unable to synchronize response streams. Check tunnel status.");
+                console.error(error);
+            } finally {
+                btn.disabled = false; btn.innerText = "GENERATE";
+            }
         }
 
-        function triggerWorkflow() {
-            const prompt = userInput.value.trim();
-            if(!prompt) return;
+        // =========================================================================
+        // 📡 CROSS-BOT INTER-COMMUNICATION LISTENER (For other users' AIs)
+        // =========================================================================
+        window.addEventListener("message", async function(event) {
+            let tunnelBase = document.getElementById('tunnelUrl').value.trim();
+            if (!tunnelBase) return;
+            if(!tunnelBase.endsWith('/')) tunnelBase += '/';
 
-            appendMessage('user', prompt);
-            userInput.value = '';
+            if (event.data && event.data.type === "REQUEST_LOCAL_LLM") {
+                try {
+                    const res = await fetch(`${tunnelBase}api/generate`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            model: "taqi-core",
+                            prompt: event.data.prompt,
+                            stream: false
+                        })
+                    });
+                    const data = await res.json();
+                    
+                    // Sending response loop directly back to external caller bot
+                    event.source.postMessage({
+                        type: "LOCAL_LLM_RETURN",
+                        response: data.response,
+                        status: "success"
+                    }, event.origin);
 
-            // Public UI Instruction
-            appendMessage('ai', `🔄 **Request Registered!**\n\nBaqi users ke liye workflow pipeline automate karne ke liye, aap is repository par ek naya **GitHub Issue** banayein jiska Title **[AI]** se shuru ho aur body mein aapka prompt ho.\n\nGitHub Actions background mein bina kisi API key ke offline model run karke web pages compile kar dega!`);
+                } catch (e) {
+                    event.source.postMessage({ type: "LOCAL_LLM_RETURN", status: "failed" }, event.origin);
+                }
+            }
+        });
+
+        function appendBubble(sender, text) {
+            const output = document.getElementById('chat-output');
+            const bubble = document.createElement('div');
+            const id = 'node-' + Date.now(); bubble.id = id;
+
+            if (sender === 'user') {
+                bubble.className = "max-w-[85%] bg-slate-950 text-slate-200 self-end ml-auto border border-slate-900 p-4 rounded-2xl text-sm leading-relaxed";
+            } else if (sender === 'system') {
+                bubble.className = "text-emerald-500/60 font-mono text-xs animate-pulse p-2 self-start";
+            } else {
+                bubble.className = "max-w-[85%] glass-panel text-slate-100 self-start mr-auto border-l-2 border-emerald-500 font-mono text-[13px] p-4 rounded-2xl leading-relaxed whitespace-pre-wrap";
+            }
+
+            bubble.innerText = text;
+            output.appendChild(bubble);
+            output.scrollTop = output.scrollHeight;
+            return id;
         }
     </script>
 </body>
