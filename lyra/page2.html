@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LYRA AI - Publisher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white p-8">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6 text-green-400">LYRA AI Code Publisher</h2>
+        
+        <input id="siteName" type="text" placeholder="Enter Site Name (e.g., mysite)" class="w-full p-3 mb-4 bg-gray-800 rounded border border-gray-700 text-white">
+        <textarea id="htmlCode" rows="12" placeholder="Paste your HTML code here..." class="w-full p-4 bg-gray-900 rounded border border-gray-700 font-mono text-sm text-green-300"></textarea>
+        
+        <button id="publishBtn" onclick="publishSite()" class="mt-4 px-8 py-3 bg-green-600 hover:bg-green-700 rounded font-bold w-full transition">
+            Publish Website (or say "Publish")
+        </button>
+        
+        <p id="status" class="mt-4 text-center text-yellow-400 font-semibold"></p>
+    </div>
+
+    <script>
+        // LYRA Voice Output Function
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // GitHub Config (Use HF Backend in production to hide token!)
+        const GITHUB_TOKEN = "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"; 
+        const OWNER = "muhammadtaqi512q-oss";
+        const REPO = "a";
+
+        async function publishSite() {
+            const name = document.getElementById("siteName").value.trim().toLowerCase();
+            const code = document.getElementById("htmlCode").value;
+            const status = document.getElementById("status");
+
+            if(!name || !code) {
+                speak("Please provide both site name and HTML code.");
+                return;
+            }
+
+            status.innerText = "LYRA is uploading your site to GitHub...";
+            speak("Uploading your site to GitHub");
+
+            const path = `lyra/${name}/index.html`;
+            const b64Content = btoa(unescape(encodeURIComponent(code)));
+
+            const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${GITHUB_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: `Site ${name} deployed via LYRA Voice AI`,
+                    content: b64Content
+                })
+            });
+
+            if(res.ok) {
+                const url = `https://${OWNER}.github.io/${REPO}/lyra/${name}/`;
+                status.innerHTML = `Success! Live Link: <a class="text-blue-400 underline" href="${url}" target="_blank">${url}</a>`;
+                speak("Your website has been successfully published by Lyra.");
+            } else {
+                status.innerText = "Error uploading. Check console or token permissions.";
+                speak("Failed to publish the website.");
+            }
+        }
+
+        // Voice Command Activator on Page 2
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const rec = new SpeechRecognition();
+            rec.continuous = true;
+            rec.onresult = (e) => {
+                const phrase = e.results[e.resultIndex][0].transcript.toLowerCase();
+                if(phrase.includes("publish") || phrase.includes("publish this")) {
+                    publishSite();
+                }
+            };
+            rec.start();
+        }
+    </script>
+</body>
+</html>
