@@ -1,1 +1,37 @@
-<h1>lyra project</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LYRA AI - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center h-screen">
+    <h1 class="text-5xl font-bold mb-4 text-blue-400 animate-pulse">LYRA AI Dashboard</h1>
+    <p class="text-gray-400 mb-8">Say "Open Page 2" or "Open Lyramoon AI" to start.</p>
+    
+    <button onclick="window.location.href='page2.html'" class="px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+        Go to Code Editor (Page 2)
+    </button>
+
+    <script>
+        // Active Voice Recognition on Home Page
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.lang = 'en-US';
+            
+            recognition.onresult = (event) => {
+                const text = event.results[event.resultIndex][0].transcript.toLowerCase();
+                if (text.includes("open page two") || text.includes("open page 2")) {
+                    window.location.href = "page2.html";
+                }
+                if (text.includes("open lyramoon ai")) {
+                    window.open("https://muhammad-taqi512-masterai.hf.space", "_blank");
+                }
+            };
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
